@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Info</title>
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+    
+        th, td {
+          border: 1px solid black;
+          padding: 8px;
+          text-align: left;
+        }
+    
+        th {
+          background-color: #f2f2f2;
+        }
+      </style>
+</head>
+<body>
+    <table>
+      <thead>
+        <tr>
+          <th>Company Name</th>
+          <th>Logo</th>
+          <th>About</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  
+    <script>
+      // Fetch the JSON data
+      fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+          const tableBody = document.getElementById('table-body');
+          data.forEach(company => {
+            const row = document.createElement('tr');
+            const companyNameCell = document.createElement('td');
+            companyNameCell.textContent = company.company_name;
+            const logoCell = document.createElement('td');
+            const logoImage = document.createElement('img');
+            logoImage.src = company.img_src;
+            logoImage.width = 50;
+            logoCell.appendChild(logoImage);
+            const aboutCell = document.createElement('td');
+            aboutCell.textContent = company.about;
+            row.appendChild(companyNameCell);
+            row.appendChild(logoCell);
+            row.appendChild(aboutCell);
+            tableBody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.log('Error:', error);
+        });
+    </script>
+    
+</body>
+</html>
